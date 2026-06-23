@@ -34,3 +34,8 @@ navigate to http://localhost:4200/.
 # CHAT !
 
 open several browsers to http://localhost:4200/, and speak as you want!
+
+# Database
+
+this generateDB.SQL file is a script to generate one only schema.
+It has to be upgraded to fit with the microservices solution.
