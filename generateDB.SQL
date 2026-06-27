@@ -64,3 +64,22 @@ CREATE TABLE `Payment` (
     `mode_payment` ENUM('CB', 'PAYPAL'),
     CONSTRAINT `fk_payment_reservation` FOREIGN KEY (`reservation_id`) REFERENCES `Reservation`(`id`)
 );
+
+CREATE TABLE `Notification` (
+    `id` CHAR(36) PRIMARY KEY,
+    `user_id` CHAR(36) NOT NULL,
+    `reservation_id` CHAR(36),
+    `type` ENUM(
+        'RESERVATION_CONFIRMED', 
+        'PAYMENT_VALIDATED',  
+        'VEHICLE_PICKED_UP', 
+        'VEHICLE_RETURNED', 
+        'CANCELED'
+    ) NOT NULL,
+    `message` TEXT NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `sent_at` TIMESTAMP NULL,
+    
+    -- Ajout des clés étrangères pointant vers User et Reservation
+    CONSTRAINT `fk_notification_user` FOREIGN KEY (`user_id`) REFERENCES `User`(`id`),
+    CONSTRAINT `fk_notification_reservation` FOREIGN KEY (`reservation_id`) REFERENCES `Reservation`(`id`)
