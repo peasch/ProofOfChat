@@ -6,6 +6,9 @@ CREATE TABLE `User` (
     `firstName` VARCHAR(255) NOT NULL,
     `password` TEXT NOT NULL,
     `email` VARCHAR(255) NOT NULL UNIQUE,
+    `birthDate` VARCHAR(255),
+    `adress` VARCHAR(255),
+    `language` VARCHAR(255),
     `createdAt` TIMESTAMP,
     `updatedAt` TIMESTAMP,
     `role` ENUM('ADMIN', 'CLIENT')
@@ -22,6 +25,8 @@ CREATE TABLE `Vehicle` (
     `id` CHAR(36) PRIMARY KEY,
     `make` VARCHAR(255) NOT NULL,
     `model` VARCHAR(255) NOT NULL,
+    `available` BOOLEAN DEFAULT TRUE, -- Type BOOLEAN PostGreSQL 
+                                      --  `available` NUMBER(1), aussi possible
     `pictureURL` VARCHAR(255),
     `category` VARCHAR(255) NOT NULL,
     `price_per_day` DECIMAL(10,2)
@@ -48,6 +53,12 @@ CREATE TABLE `Reservation` (
     `startDate` TIMESTAMP,
     `endDate` TIMESTAMP,
     `creationDate` TIMESTAMP,
+    `current_status` ENUM(
+        'RESERVATION_CONFIRMED', 
+        'PAYMENT_VALIDATED',  
+        'VEHICLE_PICKED_UP', 
+        'VEHICLE_RETURNED', 
+        'CANCELED'
     CONSTRAINT `fk_reservation_user` FOREIGN KEY (`user_id`) REFERENCES `User`(`id`),
     CONSTRAINT `fk_reservation_vehicle` FOREIGN KEY (`vehicle_id`) REFERENCES `Vehicle`(`id`),
     CONSTRAINT `fk_reservation_startAgency` FOREIGN KEY (`startAgency_id`) REFERENCES `Agency`(`id`),
